@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>802954584874-oi5eble567m88r0vtgruluhfafe5rg9m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.802954584874-oi5eble567m88r0vtgruluhfafe5rg9m</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCYkLPuU6RNy3dJ7CadsKHiTH4-kajztjY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>802954584874</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.Educe876AI.PotholeApp</string>
+	<key>PROJECT_ID</key>
+	<string>educe876aipotholeapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>educe876aipotholeapp.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:802954584874:ios:a90a2130e6ebf7c1e2f453</string>
+</dict>
+</plist>
