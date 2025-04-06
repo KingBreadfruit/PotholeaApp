@@ -7,7 +7,7 @@ struct PotholeAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginScreen()
+            WelcomeScreen()
         }
     }
 }
