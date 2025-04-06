@@ -10,97 +10,175 @@ struct DashboardScreen: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var showLogoutConfirmation = false
-    @Environment(\.presentationMode) var presentationMode // For navigating back to login
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                Spacer(minLength: 20)
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    gradient: Gradient(colors: [AppColors.backgroundBlack, AppColors.surfaceBlack]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
                 
-                // User Info Section
-                VStack(spacing: 10) {
-                    Text("Welcome, \(userName)!")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.blue)
-                        .multilineTextAlignment(.center)
+                VStack(spacing: 24) {
+                    // Header with app title
+                    VStack(spacing: 0) {
+                        Text("POTHOLE")
+                            .font(.system(size: 28, weight: .black, design: .rounded))
+                            .foregroundColor(AppColors.primaryGold)
+                        
+                        Text("REPORTER")
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                            .foregroundColor(AppColors.textGray)
+                            .tracking(5)
+                    }
+                    .padding(.top, 20)
+                    
+                    // User Info Card
+                    VStack(spacing: 16) {
+                        Text("Welcome, \(userName)")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(AppColors.primaryGold)
+                        
+                        VStack(spacing: 12) {
+                            HStack {
+                                Image(systemName: "envelope.fill")
+                                    .foregroundColor(AppColors.primaryGold)
+                                Text(userEmail)
+                                    .foregroundColor(AppColors.textGray)
+                                Spacer()
+                            }
+                            
+                            HStack {
+                                Image(systemName: "mappin.circle.fill")
+                                    .foregroundColor(AppColors.primaryGold)
+                                Text("Parish: \(userParish)")
+                                    .foregroundColor(AppColors.textGray)
+                                Spacer()
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(20)
+                    .background(AppColors.surfaceBlack)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(AppColors.darkGold.opacity(0.3), lineWidth: 1)
+                    )
+                    .cornerRadius(16)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    
+                    // Report Pothole Button - NEW ADDITION
+                    NavigationLink(destination: ReportScreen()) {
+                        HStack {
+                            Image(systemName: "camera.fill")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                            Text("REPORT POTHOLE")
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                            Spacer()
+                            Image(systemName: "arrow.right")
+                                .foregroundColor(.black.opacity(0.7))
+                        }
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(radius: 3)
-                    
-                    VStack(spacing: 10) {
-                        Text(userEmail)
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 20)
-                        
-                        Text("Parish: \(userParish)")
-                            .font(.headline)
-                            .foregroundColor(.gray)
-                            .padding(.horizontal, 20)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [AppColors.primaryGold, AppColors.darkGold]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(16)
+                        .shadow(color: AppColors.primaryGold.opacity(0.3), radius: 10, x: 0, y: 5)
                     }
-                    .padding()
-                    .background(Color(UIColor.systemGray6))
-                    .cornerRadius(12)
-                    .shadow(radius: 2)
-                }
-                .padding(.horizontal, 30)
-                
-                Spacer()
-                
-                // Dashboard Features Section (Settings & Statistics Navigation)
-                VStack(spacing: 20) {
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    
+                    // Features Section
+                    Text("DASHBOARD")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(AppColors.textGray)
+                        .tracking(4)
+                        .padding(.top, 20)
+                        .padding(.bottom, 8)
+                    
+                    // Settings Button
                     NavigationLink(destination: SettingsScreen()) {
                         HStack {
                             Image(systemName: "gearshape.fill")
+                                .font(.title3)
+                                .foregroundColor(AppColors.primaryGold)
                             Text("Settings")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(AppColors.primaryGold.opacity(0.7))
                         }
-                        .font(.title2)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue.opacity(0.8))
-                        .foregroundColor(.white)
+                        .background(AppColors.surfaceBlack)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.darkGold.opacity(0.3), lineWidth: 1)
+                        )
                         .cornerRadius(12)
                     }
+                    .padding(.horizontal, 24)
                     
+                    // Statistics Button
                     NavigationLink(destination: StatisticsScreen()) {
                         HStack {
                             Image(systemName: "chart.bar.fill")
+                                .font(.title3)
+                                .foregroundColor(AppColors.primaryGold)
                             Text("Statistics")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(AppColors.primaryGold.opacity(0.7))
                         }
-                        .font(.title2)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green.opacity(0.8))
-                        .foregroundColor(.white)
+                        .background(AppColors.surfaceBlack)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.darkGold.opacity(0.3), lineWidth: 1)
+                        )
                         .cornerRadius(12)
                     }
+                    .padding(.horizontal, 24)
+                    
+                    Spacer()
+                    
+                    // Logout Button
+                    Button(action: {
+                        showLogoutConfirmation = true
+                    }) {
+                        Text("LOG OUT")
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [AppColors.primaryGold, AppColors.darkGold]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(16)
+                            .shadow(color: AppColors.primaryGold.opacity(0.3), radius: 10, x: 0, y: 5)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 30)
                 }
-                .padding(.horizontal, 40)
-                
-                Spacer()
-                
-                // Logout Button
-                Button(action: {
-                    showLogoutConfirmation = true
-                }) {
-                    Text("Log Out")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                        .padding(.horizontal, 40)
-                }
-                .padding(.bottom, 30)
-                
-                Spacer(minLength: 10)
             }
-            .padding(.top, 50)
             .onAppear {
                 fetchUserData()
             }
@@ -114,6 +192,7 @@ struct DashboardScreen: View {
                 }
                 Button("Cancel", role: .cancel, action: {})
             }
+            .navigationBarHidden(true)
         }
     }
 
