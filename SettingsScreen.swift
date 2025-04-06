@@ -19,82 +19,165 @@ struct SettingsScreen: View {
     ]
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
-                Spacer(minLength: 20)
-                
-                Text("Settings")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
-                    
-                VStack(spacing: 10) {
-                    TextField("Full Name", text: $name)
-                        .padding()
-                        .background(Color(UIColor.systemGray6))
-                        .cornerRadius(8)
-
-                    TextField("Email", text: $email)
-                        .disabled(true) // Email should not be editable
-                        .padding()
-                        .background(Color(UIColor.systemGray5))
-                        .cornerRadius(8)
-
-                    Picker("Select Parish", selection: $parish) {
-                        ForEach(parishes, id: \ .self) { parish in
-                            Text(parish).tag(parish)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    .padding()
-                    .background(Color(UIColor.systemGray6))
-                    .cornerRadius(8)
+        ZStack {
+            // Gradient background
+            LinearGradient(
+                gradient: Gradient(colors: [AppColors.backgroundBlack, AppColors.surfaceBlack]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            VStack(spacing: 24) {
+                // Header
+                VStack(spacing: 8) {
+                    Text("SETTINGS")
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundColor(AppColors.primaryGold)
+                        .tracking(2)
                 }
-                .padding(.horizontal, 30)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
+                
+                // Settings Fields
+                VStack(spacing: 18) {
+                    // Name Field
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Full Name")
+                            .font(.subheadline)
+                            .foregroundColor(AppColors.textGray)
+                            .padding(.leading, 4)
+                        
+                        HStack {
+                            Image(systemName: "person.fill")
+                                .foregroundColor(AppColors.primaryGold)
+                            TextField("Full Name", text: $name)
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(AppColors.surfaceBlack)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.darkGold.opacity(0.3), lineWidth: 1)
+                        )
+                        .cornerRadius(12)
+                    }
+                    
+                    // Email Field (Disabled)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Email Address")
+                            .font(.subheadline)
+                            .foregroundColor(AppColors.textGray)
+                            .padding(.leading, 4)
+                        
+                        HStack {
+                            Image(systemName: "envelope.fill")
+                                .foregroundColor(AppColors.primaryGold.opacity(0.6))
+                            TextField("Email", text: $email)
+                                .disabled(true)
+                                .foregroundColor(AppColors.textGray)
+                        }
+                        .padding()
+                        .background(AppColors.surfaceBlack.opacity(0.7))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.darkGold.opacity(0.2), lineWidth: 1)
+                        )
+                        .cornerRadius(12)
+                    }
+                    
+                    // Parish Dropdown
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Parish")
+                            .font(.subheadline)
+                            .foregroundColor(AppColors.textGray)
+                            .padding(.leading, 4)
+                        
+                        HStack {
+                            Image(systemName: "mappin.circle.fill")
+                                .foregroundColor(AppColors.primaryGold)
+                            
+                            Picker("Select Parish", selection: $parish) {
+                                ForEach(parishes, id: \.self) { parish in
+                                    Text(parish).tag(parish)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                            .foregroundColor(.white)
+                        }
+                        .padding()
+                        .background(AppColors.surfaceBlack)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(AppColors.darkGold.opacity(0.3), lineWidth: 1)
+                        )
+                        .cornerRadius(12)
+                    }
+                }
+                .padding(.horizontal, 24)
+                
+                Spacer().frame(height: 20)
                 
                 // Save Changes Button
                 Button(action: updateUserProfile) {
-                    Text("Save Changes")
-                        .font(.title2)
+                    Text("SAVE CHANGES")
                         .fontWeight(.bold)
-                        .padding()
+                        .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .frame(height: 56)
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [AppColors.primaryGold, AppColors.darkGold]),
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(16)
+                        .shadow(color: AppColors.primaryGold.opacity(0.3), radius: 10, x: 0, y: 5)
                 }
-                .padding(.horizontal, 40)
+                .padding(.horizontal, 24)
                 
                 // Change Password Button
                 Button(action: resetPassword) {
-                    Text("Change Password")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding()
+                    Text("CHANGE PASSWORD")
+                        .fontWeight(.semibold)
+                        .foregroundColor(AppColors.primaryGold)
                         .frame(maxWidth: .infinity)
-                        .background(Color.orange)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                        .frame(height: 56)
+                        .background(AppColors.surfaceBlack)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(AppColors.darkGold.opacity(0.5), lineWidth: 1.5)
+                        )
+                        .cornerRadius(16)
                 }
-                .padding(.horizontal, 40)
+                .padding(.horizontal, 24)
+                .padding(.top, 12)
                 
                 // Delete Account Button
                 Button(action: { showDeleteConfirmation = true }) {
-                    Text("Delete Account")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
+                    HStack {
+                        Image(systemName: "trash.fill")
+                            .foregroundColor(Color(hex: "FF3B30").opacity(0.9))
+                        Text("DELETE ACCOUNT")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(Color(hex: "FF3B30").opacity(0.9))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 56)
+                    .background(AppColors.surfaceBlack)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color(hex: "FF3B30").opacity(0.3), lineWidth: 1)
+                    )
+                    .cornerRadius(16)
                 }
-                .padding(.horizontal, 40)
-                .padding(.top, 10)
+                .padding(.horizontal, 24)
+                .padding(.top, 12)
                 
                 Spacer()
             }
-            .padding(.top, 20)
+            .padding(.top, 32)
             .onAppear {
                 loadUserProfile()
             }
@@ -105,7 +188,21 @@ struct SettingsScreen: View {
                 Button("Delete", role: .destructive, action: deleteUserAccount)
                 Button("Cancel", role: .cancel, action: {})
             }
-            .navigationBarBackButtonHidden(false) // Show back button
+        }
+        .navigationBarTitle("", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(AppColors.primaryGold)
+                        Text("Back")
+                            .foregroundColor(AppColors.primaryGold)
+                    }
+                }
+            }
         }
     }
     
