@@ -2,7 +2,7 @@ import SwiftUI
 import AVFoundation
 import ARKit
 
-struct CameraView: UIViewControllerRepresentable {
+struct ARCameraView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         let viewController = CameraViewController()
         return viewController
